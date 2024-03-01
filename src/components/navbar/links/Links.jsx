@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import NavLink from './navLink/navLink'
 
 const Links = () => {
 	const links = [
@@ -7,16 +7,28 @@ const Links = () => {
 		{ title: 'Contact', path: '/contact' },
 		{ title: 'Blog', path: '/blog' },
 	]
+
+	const session = true
+	const isAdmin = true
+
 	return (
 		<div className='flex items-center gap-3'>
 			{links.map((link) => (
-				<Link
-					key={link.path}
-					href={link.path}
-				>
-					{link.title}
-				</Link>
+				<NavLink
+					item={link}
+					key={link.title}
+				/>
 			))}
+			{session ? (
+				<>
+					{isAdmin && <NavLink item={{ title: 'Admin', path: '/admin' }} />}
+					<button className='p-2 bg-slate-200 text-gray-950 font-bold rounded-2xl min-w-20'>
+						Logout
+					</button>
+				</>
+			) : (
+				<NavLink item={{ title: 'Login', path: '/login' }} />
+			)}
 		</div>
 	)
 }
